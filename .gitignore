@@ -1,3 +1,5 @@
+# Compiled code and input text files #
+*.in
 *.class
 
 # Mobile Tools for Java (J2ME)
