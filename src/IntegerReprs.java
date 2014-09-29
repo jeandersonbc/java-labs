@@ -17,6 +17,15 @@ class Main {
                 System.out.printf("%2d == %2d ? %s\n", a, b, equals(a, b) ? "same" : "not same");
             }
         }
+        System.out.println("Comparing >> and >>> operators");
+        int a = 0xABCD1941;
+        int b = 0xABCD1941;
+        for (int i = 0; i < 32; i++) {
+            b >>>= i;
+            a >>= i;
+            System.out.printf("%11d >>  %2d = %s\t", a, i, Integer.toBinaryString(a));
+            System.out.printf("%11d >>> %2d = %s\n", b, i, Integer.toBinaryString(b));
+        }
     }
     /** returns true if n is a negative value. Shifts the signal bit
     to the 0-th index and performs a bitwise AND to check if it's negative */
