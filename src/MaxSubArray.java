@@ -8,7 +8,34 @@ class Main {
         /** Returns the maximum sum of the maxium-subarray within values */
         int maxSum(int[] values);
     }
+    static class DivideAndConquer implements MaxSubArrayProblemIF {
+        @Override
+        public int maxSum(int[] values) {
+            return maxSum(values, 0, values.length - 1);
+        }
+        private int maxSum(int[] values, int left, int right) {
+            // base case
+            if (left >= right)
+                return values[left];
 
+            // crossing-point
+            int mid = (right + left) / 2;
+
+            int maxSumLeft = maxSum(values, left, mid);
+            int maxSumRight = maxSum(values, mid+1, right);
+            int maxSumCrossing = maxSum(values, left, mid, right);
+
+            int result = maxSumLeft > maxSumRight ? maxSumLeft : maxSumRight;
+            result = maxSumCrossing > result ? maxSumCrossing : result;
+
+            return result;
+        }
+        private int maxSum(int[] values, int low, int mid, int high) {
+            int sum = values[mid];
+            // TODO find max-left and max-right
+            return sum;
+        }
+    }
     /** Naive implementation of the Maximum-Subarray Problem. Given an array A of N elements,
     check for all possible sequences with different lenghts L and update the maximum sum.
     It requires O(n^2) * O(n) steps to find the solution (therefore, O(n^3)). Extra memory not required */
@@ -47,10 +74,13 @@ class Main {
 
     // Test driver
     public static void main(String[] args) {
-        int[] values = {13, -3, -25, 20, -3, -16, -23, 18,
-                        20, -7, 12, -5, -22, 15, 7};
+        int[] values = {13, -3, -25, 20, -3, -16, -23,
+                18, 20, -7, 12, -5, -22, 15, 7};
 
-        MaxSubArrayProblemIF[] algs = {new Naive()};
+        MaxSubArrayProblemIF[] algs = {
+            new Naive(),
+            new DivideAndConquer()
+        };
         for (MaxSubArrayProblemIF alg : algs) {
             System.out.println("Should be 43: " + alg.maxSum(values));
         }
