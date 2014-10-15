@@ -1,4 +1,5 @@
 # Compiled code and input text files #
+*.txt
 *.in
 *.class
 
