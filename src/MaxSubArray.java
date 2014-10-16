@@ -32,7 +32,18 @@ class Main {
         }
         private int maxSum(int[] values, int low, int mid, int high) {
             int sum = values[mid];
-            // TODO find max-left and max-right
+            int sumTmp = sum;
+            for (int i = mid - 1; i >= 0; i--) {
+                sumTmp += values[i];
+                if (sumTmp > sum)
+                    sum = sumTmp;
+            }
+            sumTmp = sum;
+            for (int j = mid + 1; j < values.length; j++) {
+                sumTmp += values[j];
+                if (sumTmp > sum)
+                    sum = sumTmp;
+            }
             return sum;
         }
     }
