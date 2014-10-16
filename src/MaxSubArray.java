@@ -1,4 +1,5 @@
 import java.lang.IllegalArgumentException;
+import java.util.Random;
 
 class Main {
 
@@ -85,15 +86,27 @@ class Main {
 
     // Test driver
     public static void main(String[] args) {
-        int[] values = {13, -3, -25, 20, -3, -16, -23,
-                18, 20, -7, 12, -5, -22, 15, 7};
+        int[] values = buildRandomIntegerArray((int)1e5);
 
         MaxSubArrayProblemIF[] algs = {
+            new DivideAndConquer(),
             new Naive(),
-            new DivideAndConquer()
         };
         for (MaxSubArrayProblemIF alg : algs) {
-            System.out.println("Should be 43: " + alg.maxSum(values));
+            System.out.println(alg.maxSum(values));
         }
+    }
+    static int[] buildRandomIntegerArray(int n) {
+        int[] array = new int[n];
+        long seed = 1234L;
+        Random rand = new Random(seed);
+        for (int i = 0; i < array.length; i++) {
+            array[i] = rand.nextInt() * (isNegative(rand) ? -1 : 1);
+        }
+        return array;
+    }
+    static boolean isNegative(Random judge) {
+        int maxBound = 2;
+        return (judge.nextInt(maxBound) == 1);
     }
 }
