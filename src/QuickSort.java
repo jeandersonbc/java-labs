@@ -10,11 +10,14 @@ public class QuickSort {
 
     abstract static class ClassicQuickSort {
 
+        private long comparisons;
+
         // Wrapper function
         List<Integer> sort(List<Integer> values) {
             if (values == null) {
                 throw new java.lang.IllegalArgumentException();
             }
+            this.comparisons = 0;
             List<Integer> clonned = new ArrayList<Integer>(values);
             sort(clonned, 0, clonned.size() - 1);
             return clonned;
@@ -22,12 +25,17 @@ public class QuickSort {
         // QuickSort
         private final void sort(List<Integer> values, int left, int right) {
             if (left < right) {
+                this.comparisons += (right - left);
                 int p = partition(values, left, right);
                 sort(values, left, p - 1);
                 sort(values, p + 1, right);
             }
         }
         protected abstract int partition(List<Integer> values, int left, int right);
+
+        long getNumberOfComparisons() {
+            return this.comparisons;
+        }
     }
     /**
      * First element as the pivot.
@@ -89,7 +97,10 @@ public class QuickSort {
         while (in.hasNext()) {
             data.add(in.nextInt());
         }
-        ClassicQuickSort[] impls = {new QuickSort1(), new QuickSort2()};
+        ClassicQuickSort[] impls = {
+            new QuickSort1(),
+            new QuickSort2(),
+        };
         for (ClassicQuickSort impl : impls) {
             System.out.println(String.format("Running \"%s\" algorithm", impl));
             List<Integer> result = impl.sort(data);
@@ -100,6 +111,9 @@ public class QuickSort {
                     )
                 );
             }
+            System.out.println(String.format("Number of Comparisons: %d\n",
+                impl.getNumberOfComparisons())
+            );
         }
         in.close();
     }
