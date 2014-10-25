@@ -120,6 +120,15 @@ public class QuickSort {
             return i;
         }
         private int getMedian(List<Integer> values, int min, int max) {
+            Integer first = values.get(min);
+            Integer middle = values.get((min + max) >> 1);
+            Integer last = values.get(max);
+
+            if ((middle < last && middle > first) || (middle < first && middle > last))
+                return ((min + max) >> 1);
+            if ((first < last && first > middle) || (first < middle && first > last))
+                return min;
+
             return max;
         }
         @Override
