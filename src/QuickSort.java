@@ -60,7 +60,7 @@ public class QuickSort {
         }
         @Override
         public String toString() {
-            return "QuickSort ver1";
+            return "QuickSort ver1 [first-pivot]";
         }
     }
     /**
@@ -69,23 +69,62 @@ public class QuickSort {
     static class QuickSort2 extends ClassicQuickSort {
         protected int partition(List<Integer> values, int left, int right) {
             Integer pivot = values.get(right);
-            int i = left - 1;
-            for (int j = left; j <= right - 1; j++) {
-                if (values.get(j) < pivot) {
-                    Integer temp = values.get(++i);
-                    values.set(i, values.get(j));
-                    values.set(j, temp);
-                }
-            }
-            Integer temp = values.get(i + 1);
-            values.set(i + 1, pivot);
+
+            Integer temp = values.get(left);
+            values.set(left, pivot);
             values.set(right, temp);
 
-            return i + 1;
+            int i = left;
+            for (int j = left + 1; j <= right; j++) {
+                if (values.get(j) < pivot) {
+                    temp = values.get(++i);
+                    values.set(i, values.get(j));
+                    values.set(j , temp);
+                }
+            }
+            temp = values.get(i);
+            values.set(i, pivot);
+            values.set(left, temp);
+
+            return i;
         }
         @Override
         public String toString() {
-            return "QuickSort ver2";
+            return "QuickSort ver2 [last-pivot]";
+        }
+    }
+    /**
+     * Median-of-3 as the pivot.
+     */
+    static class QuickSort3 extends ClassicQuickSort {
+        protected int partition(List<Integer> values, int left, int right) {
+            int pivotIndex = getMedian(values, left, right);
+            Integer pivot = values.get(pivotIndex);
+
+            Integer temp = values.get(left);
+            values.set(left, pivot);
+            values.set(pivotIndex, temp);
+
+            int i = left;
+            for (int j = left + 1; j <= right; j++) {
+                if (values.get(j) < pivot) {
+                    temp = values.get(++i);
+                    values.set(i, values.get(j));
+                    values.set(j , temp);
+                }
+            }
+            temp = values.get(i);
+            values.set(i, pivot);
+            values.set(left, temp);
+
+            return i;
+        }
+        private int getMedian(List<Integer> values, int min, int max) {
+            return max;
+        }
+        @Override
+        public String toString() {
+            return "QuickSort ver3 [median-pivot]";
         }
     }
     // Driver
@@ -100,6 +139,7 @@ public class QuickSort {
         ClassicQuickSort[] impls = {
             new QuickSort1(),
             new QuickSort2(),
+            new QuickSort3(),
         };
         for (ClassicQuickSort impl : impls) {
             System.out.println(String.format("Running \"%s\" algorithm", impl));
