@@ -1,7 +1,8 @@
-warmup-java
+Labs-Java
 ===========
 
-coding is fun, yay
+I use this repository to refresh some Java programming and to remember how to do things in Java.
+If you want to learn, I honestly recommend you a good text editor and the command line. Here it's just
+"plain java" - no libs, frameworks, etc, just quick examples. That's it!
 
-
-..but seriously, I use this repository to refresh some Java programming and to remember how to do things in Java. Feel free to fork it :)
+Feel free to fork it.
